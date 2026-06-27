@@ -70,6 +70,11 @@ res.cookie("authToken", token, {
     secure: process.env.NODE_ENV === "production"
 })
 
+req.session.user = {
+    userId: user._id,
+    role: user.role
+}
+
 return res.status(200).json({msg:"login exitoso",token})
 
 }
@@ -80,4 +85,38 @@ return res.status(500).json({
 }
 
 
+}
+
+
+
+export const profile=(req,res)=>{
+return res.status(200).json({
+        msg: "perfil obtenido correctamente",
+        user: req.user
+    })
+}
+
+
+export const admin = (req,res) => {
+    return res.status(200).json({
+        msg: "Bienvenido administrador",
+        user: req.user
+    })
+}
+
+
+export const logout = (req, res) => {
+    res.clearCookie("authToken")
+     return res.status(200).json({
+        msg: "Logout exitoso"
+    })
+
+}
+
+
+export const session = (req, res) => {
+    return res.status(200).json({
+        msg: "Sesión obtenida correctamente",
+        session: req.session
+    })
 }
